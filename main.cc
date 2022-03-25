@@ -1,7 +1,6 @@
 #include<iostream>
 #include<string>
 #include"Example.h"
-#include"ExampleSerDes.h"
 
 int main(void){
     Example ex;
@@ -11,10 +10,10 @@ int main(void){
         ex.iarray.push_back(i);
         ex.farray.push_back(i/0.3);
     }
-/*
-    ExampleSerDes *ex_ser=(ExampleSerDes*)&ex;
 
-    ex_ser->serialize();*/
+
+    std::string fname("example.dat");
+    ex.serialize(fname);
 
     return 0;
 }

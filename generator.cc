@@ -4,6 +4,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <algorithm>
 
 // msgファイルの情報を以下のクラスに落とし込む実装はしていない
 class ROSMsgType final {
@@ -69,6 +70,7 @@ void generate_header(const ROSMsgType &msg) {
     {
       auto t = msg.getTypeName();
       fp = fopen(std::string("include/" + t + ".h").c_str(), "w");
+      fprintf(fp, "#pragma once\n");
       fprintf(fp, "#include<iostream>\n");
       fprintf(fp, "#include<vector>\n");
       fprintf(fp, "#include<cstdint>\n");
