@@ -11,8 +11,7 @@ public:
   int32_t deserialize_int32(void);
   uint32_t deserialize_uint32(void);
   float deserialize_float32(void);
-  std::string deserialize_String(void);
-  void *deserialize_time(void);
+  std::string deserialize_string(void);
 };
 
 uint8_t PrimitiveDeserializer::deserialize_uint8(void) {
@@ -50,7 +49,7 @@ float PrimitiveDeserializer::deserialize_float32(void) {
   return ret;
 }
 
-std::string PrimitiveDeserializer::deserialize_String(void) {
+std::string PrimitiveDeserializer::deserialize_string(void) {
   if (!ifs_)
     return "";
 
@@ -62,10 +61,4 @@ std::string PrimitiveDeserializer::deserialize_String(void) {
   str = std::string(tmp.get());
 
   return str;
-}
-
-void *PrimitiveDeserializer::deserialize_time(void) {
-  if (!ifs_)
-    return nullptr;
-  // unimplemented
 }

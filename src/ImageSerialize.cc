@@ -1,13 +1,13 @@
-#include"ImageSerDes.h"
+#include"Image.h"
 
-void ImageSerDes::serialize(std::string &fname){
-  setFile(fname);
+void Image::serialize(std::string &fname){
+  setOutputFile(fname);
   this->serialize_Image();
 }
 
-void ImageSerDes::serialize_Image(void){
+void Image::serialize_Image(void){
 
-  ((HeaderSerDes*)&this->header)->serialize_Header();
+  this->header.serialize_Header();
   this->serialize_uint32(this->height);
   this->serialize_uint32(this->width);
   this->serialize_string(this->encoding);

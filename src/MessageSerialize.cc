@@ -1,11 +1,11 @@
-#include"MessageSerDes.h"
+#include"Message.h"
 
-void MessageSerDes::serialize(std::string &fname){
-  setFile(fname);
+void Message::serialize(std::string &fname){
+  setOutputFile(fname);
   this->serialize_Message();
 }
 
-void MessageSerDes::serialize_Message(void){
+void Message::serialize_Message(void){
 
   this->serialize_string(this->name);
   this->serialize_string(this->message);

@@ -4,13 +4,13 @@
 
 class Serializer {
 public:
-  bool setFile(std::string &fname);
+  bool setOutputFile(std::string &fname);
 
 protected:
   std::ofstream ofs_;
 };
 
-bool Serializer::setFile(std::string &fname) {
+bool Serializer::setOutputFile(std::string &fname) {
   ofs_.open(fname, std::ios::out | std::ios::binary);
   if (!ofs_) {
     std::cerr << "Failed to open file `" << fname << "`" << std::endl;

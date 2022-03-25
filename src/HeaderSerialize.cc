@@ -1,13 +1,13 @@
-#include"HeaderSerDes.h"
+#include"Header.h"
 
-void HeaderSerDes::serialize(std::string &fname){
-  setFile(fname);
+void Header::serialize(std::string &fname){
+  setOutputFile(fname);
   this->serialize_Header();
 }
 
-void HeaderSerDes::serialize_Header(void){
+void Header::serialize_Header(void){
 
   this->serialize_uint32(this->seq);
-  this->serialize_time(this->stamp);
+  this->stamp.serialize_Time();
   this->serialize_string(this->frame_id);
 }

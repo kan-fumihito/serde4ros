@@ -1,3 +1,3 @@
 uint32 seq
-time stamp
+Time stamp
 string frame_id

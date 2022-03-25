@@ -10,8 +10,7 @@ public:
   void serialize_int32(int32_t &arg);
   void serialize_uint32(uint32_t &arg);
   void serialize_float32(float &arg);
-  void serialize_String(std::string &arg);
-  void serialize_time(void *arg);
+  void serialize_string(std::string &arg);
 };
 
 void PrimitiveSerializer::serialize_uint8(uint8_t &arg) {
@@ -41,17 +40,11 @@ void PrimitiveSerializer::serialize_float32(float &arg) {
   ofs_.write((char *)&arg, sizeof(float));
 }
 
-void PrimitiveSerializer::serialize_String(std::string &arg) {
+void PrimitiveSerializer::serialize_string(std::string &arg) {
   if (!ofs_)
     return;
 
   size_t size = arg.size();
   ofs_.write((char *)&size, sizeof(size_t));
   ofs_.write(arg.c_str(), size);
-}
-
-void PrimitiveSerializer::serialize_time(void *arg) {
-  if (!ofs_)
-    return;
-  // unimplemented
 }
