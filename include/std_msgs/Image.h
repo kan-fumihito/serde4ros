@@ -1,13 +1,13 @@
 #pragma once
-#include<iostream>
-#include<vector>
-#include<cstdint>
-#include<string>
-#include"primitives/PrimitiveSerializer.h"
-#include"primitives/PrimitiveDeserializer.h"
-#include"std_msgs/Header.h"
+#include "primitives/PrimitiveDeserializer.h"
+#include "primitives/PrimitiveSerializer.h"
+#include "std_msgs/Header.h"
+#include <cstdint>
+#include <iostream>
+#include <string>
+#include <vector>
 
-class Image: public PrimitiveSerializer,PrimitiveDeserializer {
+class Image : public PrimitiveSerializer, PrimitiveDeserializer {
 public:
   void serialize(std::string &fname);
   void serialize_Image(void);

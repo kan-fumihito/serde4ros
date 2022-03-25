@@ -1,7 +1,7 @@
+#include "primitives/Deserializer.h"
 #include <fstream>
 #include <iostream>
 #include <string>
-#include "primitives/Deserializer.h"
 
 bool Deserializer::setInputFile(std::string &fname) {
   ifs_.open(fname, std::ios::in | std::ios::binary);
@@ -12,6 +12,4 @@ bool Deserializer::setInputFile(std::string &fname) {
   return true;
 }
 
-void Deserializer::closeInputFile(void){
-  ifs_.close();
-}
+void Deserializer::closeInputFile(void) { ifs_.close(); }

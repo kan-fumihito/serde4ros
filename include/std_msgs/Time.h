@@ -1,12 +1,12 @@
 #pragma once
-#include<iostream>
-#include<vector>
-#include<cstdint>
-#include<string>
-#include"primitives/PrimitiveSerializer.h"
-#include"primitives/PrimitiveDeserializer.h"
+#include "primitives/PrimitiveDeserializer.h"
+#include "primitives/PrimitiveSerializer.h"
+#include <cstdint>
+#include <iostream>
+#include <string>
+#include <vector>
 
-class Time: public PrimitiveSerializer,PrimitiveDeserializer {
+class Time : public PrimitiveSerializer, PrimitiveDeserializer {
 public:
   void serialize(std::string &fname);
   void serialize_Time(void);
