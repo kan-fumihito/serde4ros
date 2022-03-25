@@ -1,8 +1,9 @@
-#include"Header.h"
+#include"std_msgs/Header.h"
 
 void Header::serialize(std::string &fname){
   setOutputFile(fname);
   this->serialize_Header();
+  closeOutputFile();
 }
 
 void Header::serialize_Header(void){

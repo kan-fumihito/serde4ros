@@ -3,9 +3,9 @@
 #include<vector>
 #include<cstdint>
 #include<string>
-#include"PrimitiveSerializer.h"
-#include"PrimitiveDeserializer.h"
-#include"Time.h"
+#include"primitives/PrimitiveSerializer.h"
+#include"primitives/PrimitiveDeserializer.h"
+#include"std_msgs/Time.h"
 
 class Header: public PrimitiveSerializer,PrimitiveDeserializer {
 public:

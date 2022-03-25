@@ -6,6 +6,7 @@
 class Serializer {
 public:
   bool setOutputFile(std::string &fname);
+  void closeOutputFile(void);
 
 protected:
   std::ofstream ofs_;

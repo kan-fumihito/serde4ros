@@ -3,8 +3,8 @@
 #include<vector>
 #include<cstdint>
 #include<string>
-#include"PrimitiveSerializer.h"
-#include"PrimitiveDeserializer.h"
+#include"primitives/PrimitiveSerializer.h"
+#include"primitives/PrimitiveDeserializer.h"
 
 class Example: public PrimitiveSerializer,PrimitiveDeserializer {
 public:

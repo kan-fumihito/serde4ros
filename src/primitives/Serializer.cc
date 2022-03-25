@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include"Serializer.h"
+#include"primitives/Serializer.h"
 
 
 bool Serializer::setOutputFile(std::string &fname) {
@@ -11,4 +11,8 @@ bool Serializer::setOutputFile(std::string &fname) {
     return false;
   }
   return true;
+}
+
+void Serializer::closeOutputFile(void){
+  ofs_.close();
 }

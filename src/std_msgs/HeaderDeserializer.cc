@@ -1,8 +1,9 @@
-#include"Header.h"
+#include"std_msgs/Header.h"
 
 void Header::deserialize(std::string &fname){
   setInputFile(fname);
   this->deserialize_Header();
+  closeInputFile();
 }
 
 void Header::deserialize_Header(void){

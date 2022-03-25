@@ -1,4 +1,4 @@
-#include "PrimitiveDeserializer.h"
+#include "primitives/PrimitiveDeserializer.h"
 #include <cstdint>
 #include <fstream>
 #include <iostream>
@@ -29,6 +29,15 @@ uint32_t PrimitiveDeserializer::deserialize_uint32(void) {
 
   uint32_t ret;
   ifs_.read((char *)&ret, sizeof(uint32_t));
+  return ret;
+}
+
+uint64_t PrimitiveDeserializer::deserialize_uint64(void) {
+  if (!ifs_)
+    return 0;
+
+  uint64_t ret;
+  ifs_.read((char *)&ret, sizeof(uint64_t));
   return ret;
 }
 

@@ -6,6 +6,7 @@
 class Deserializer {
 public:
   bool setInputFile(std::string &fname);
+  void closeInputFile(void);
 
 protected:
   std::ifstream ifs_;

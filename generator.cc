@@ -49,16 +49,13 @@ const std::vector<ROSMsgType> msgTypes{
     ROSMsgType("Time", Time)};
 
 // msgファイル内で使われるプリミティブ型のエイリアス
-const std::vector<std::string> primitiveTypes = {"uint8", "int32", "uint32",
+const std::vector<std::string> primitiveTypes = {"uint8", "int32", "uint32","uint64",
                                                  "float32", "string"};
 
 // msgファイルのプリミティブ型エイリアスと、C++での型エイリアスの対応表
 const std::map<std::string, std::string> primitiveTypeMap = {
-    {"uint8", "uint8_t"},
-    {"int32", "int32_t"},
-    {"uint32", "uint32_t"},
-    {"float32", "float"},
-    {"string", "std::string"}};
+    {"uint8", "uint8_t"},   {"int32", "int32_t"}, {"uint32", "uint32_t"},
+    {"uint64", "uint64_t"}, {"float32", "float"}, {"string", "std::string"}};
 
 template <class T> bool contain(const std::string &s, const T &v) {
   return s.find(v) != std::string::npos;
@@ -69,14 +66,14 @@ void generate_header(const ROSMsgType &msg) {
     FILE *fp;
     {
       auto t = msg.getTypeName();
-      fp = fopen(std::string("include/" + t + ".h").c_str(), "w");
+      fp = fopen(std::string("include/std_msgs/" + t + ".h").c_str(), "w");
       fprintf(fp, "#pragma once\n");
       fprintf(fp, "#include<iostream>\n");
       fprintf(fp, "#include<vector>\n");
       fprintf(fp, "#include<cstdint>\n");
       fprintf(fp, "#include<string>\n");
-      fprintf(fp, "#include\"PrimitiveSerializer.h\"\n");
-      fprintf(fp, "#include\"PrimitiveDeserializer.h\"\n");
+      fprintf(fp, "#include\"primitives/PrimitiveSerializer.h\"\n");
+      fprintf(fp, "#include\"primitives/PrimitiveDeserializer.h\"\n");
     }
 
     std::string head("class " + msg.getTypeName() +
@@ -104,7 +101,7 @@ void generate_header(const ROSMsgType &msg) {
                                    "> " + p.second + ";\n");
         } else {
           //ユーザ定義型
-          fprintf(fp, "#include\"%s.h\"\n", t.c_str());
+          fprintf(fp, "#include\"std_msgs/%s.h\"\n", t.c_str());
           public_rows.emplace_back("  std::vector<" + t + "> " + p.second +
                                    ";\n");
         }
@@ -116,7 +113,7 @@ void generate_header(const ROSMsgType &msg) {
                                    p.second + ";\n");
         } else {
           //ユーザ定義型
-          fprintf(fp, "#include\"%s.h\"\n", p.first.c_str());
+          fprintf(fp, "#include\"std_msgs/%s.h\"\n", p.first.c_str());
           public_rows.emplace_back("  " + p.first + " " + p.second + ";\n");
         }
       }
@@ -139,11 +136,12 @@ void generate_serializer(const ROSMsgType &msg) {
   FILE *fp;
   {
     auto t = msg.getTypeName();
-    fp = fopen(std::string("src/" + t + "Serialize.cc").c_str(), "w");
-    fprintf(fp, "#include\"%s.h\"\n\n", t.c_str());
+    fp = fopen(std::string("src/std_msgs/" + t + "Serialize.cc").c_str(), "w");
+    fprintf(fp, "#include\"std_msgs/%s.h\"\n\n", t.c_str());
     fprintf(fp, "void %s::serialize(std::string &fname){\n", t.c_str());
     fprintf(fp, "  setOutputFile(fname);\n");
     fprintf(fp, "  this->serialize_%s();\n", t.c_str());
+    fprintf(fp, "  closeOutputFile();\n");
     fprintf(fp, "}\n\n");
     fprintf(fp, "void %s::serialize_%s(void){\n", t.c_str(), t.c_str());
   }
@@ -154,6 +152,7 @@ void generate_serializer(const ROSMsgType &msg) {
     if (contain(p.first, "[]")) {
       //配列
       auto t = p.first.substr(0, p.first.size() - 2);
+      fprintf(fp, "  this->serialize_uint64(this->%s.size());\n",p.second.c_str());
       fprintf(fp, "  for(auto &item:this->%s){\n", p.second.c_str());
       if (std::find(primitiveTypes.begin(), primitiveTypes.end(), t) !=
           primitiveTypes.end()) {
@@ -185,11 +184,12 @@ void generate_deserializer(const ROSMsgType &msg) {
   FILE *fp;
   {
     auto t = msg.getTypeName();
-    fp = fopen(std::string("src/" + t + "Deserializer.cc").c_str(), "w");
-    fprintf(fp, "#include\"%s.h\"\n\n", t.c_str());
+    fp = fopen(std::string("src/std_msgs/" + t + "Deserializer.cc").c_str(), "w");
+    fprintf(fp, "#include\"std_msgs/%s.h\"\n\n", t.c_str());
     fprintf(fp, "void %s::deserialize(std::string &fname){\n", t.c_str());
     fprintf(fp, "  setInputFile(fname);\n");
     fprintf(fp, "  this->deserialize_%s();\n", t.c_str());
+    fprintf(fp, "  closeInputFile();\n");
     fprintf(fp, "}\n\n");
     fprintf(fp, "void %s::deserialize_%s(void){\n", t.c_str(), t.c_str());
   }
@@ -199,6 +199,7 @@ void generate_deserializer(const ROSMsgType &msg) {
     if (contain(p.first, "[]")) {
       //配列
       auto t = p.first.substr(0, p.first.size() - 2);
+      fprintf(fp, "  this->%s.resize(this->deserialize_uint64());\n",p.second.c_str());
       fprintf(fp, "  for(auto &item:this->%s){\n", p.second.c_str());
       if (std::find(primitiveTypes.begin(), primitiveTypes.end(), t) !=
           primitiveTypes.end()) {

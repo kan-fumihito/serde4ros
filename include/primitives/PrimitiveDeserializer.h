@@ -11,6 +11,7 @@ public:
   uint8_t deserialize_uint8(void);
   int32_t deserialize_int32(void);
   uint32_t deserialize_uint32(void);
+  uint64_t deserialize_uint64(void);
   float deserialize_float32(void);
   std::string deserialize_string(void);
 };
