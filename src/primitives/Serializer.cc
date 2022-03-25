@@ -1,7 +1,8 @@
-#include "primitives/Serializer.h"
 #include <fstream>
 #include <iostream>
 #include <string>
+#include"primitives/Serializer.h"
+
 
 bool Serializer::setOutputFile(std::string &fname) {
   ofs_.open(fname, std::ios::out | std::ios::binary);
@@ -12,4 +13,6 @@ bool Serializer::setOutputFile(std::string &fname) {
   return true;
 }
 
-void Serializer::closeOutputFile(void) { ofs_.close(); }
+void Serializer::closeOutputFile(void){
+  ofs_.close();
+}

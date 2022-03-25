@@ -1,13 +1,21 @@
 #pragma once
-#include "primitives/PrimitiveDeserializer.h"
-#include "primitives/PrimitiveSerializer.h"
-#include <cstdint>
-#include <iostream>
-#include <string>
-#include <vector>
+#include<iostream>
+#include<vector>
+#include<cstdint>
+#include<string>
+#include"primitives/PrimitiveSerializer.h"
+#include"primitives/PrimitiveDeserializer.h"
 
-class Message : public PrimitiveSerializer, PrimitiveDeserializer {
+class Message: public PrimitiveSerializer,PrimitiveDeserializer {
 public:
+
+  Message(const Message&) = delete;
+  Message& operator=(const Message&) = delete;
+  Message& operator=(Message&&) = delete;
+
+  Message() = default;
+  Message(Message&&) = default;
+
   void serialize(std::string &fname);
   void serialize_Message(void);
   void deserialize(std::string &fname);

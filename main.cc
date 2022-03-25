@@ -1,30 +1,45 @@
-#include "std_msgs/Example.h"
-#include <iostream>
-#include <string>
+#include<iostream>
+#include<string>
+#include<cstdint>
+#include"std_msgs/Header.h"
+#include"std_msgs/Image.h"
+#include"std_msgs/Time.h"
 
-int main(void) {
-  Example ex;
-  ex.name = std::string("kan-fumihito");
+int main(void){
 
-  for (int i = 0; i < 10; i += 2) {
-    ex.iarray.push_back(i);
-    std::cout << i << std::endl;
-    ex.farray.push_back(i / 0.3);
-    std::cout << i / 0.3 << std::endl;
-  }
+    Image img;
+    Header header;
+    Time time;
+    
+    time.time=1234;
 
-  std::string fname("example.dat");
-  ex.serialize(fname);
+    header.seq=1;
+    header.frame_id=std::string("b1018262");
+    header.stamp.time=time.time;
 
-  Example dex;
-  dex.deserialize(fname);
+    img.height=42;
+    img.width=23;
+    img.encoding=std::string("jpeg");
+    img.is_bigendian=0;
+    img.step=100;
+    
+    img.data.resize(img.height * img.width);
+    for(int i=0;i<img.data.size();i++){
+      img.data[i] = i % 255;
+    }
 
-  std::cout << "===deserialized data===" << std::endl;
-  std::cout << dex.name << std::endl;
-  for (int i = 0; i < dex.iarray.size(); i++) {
-    std::cout << dex.iarray[i] << std::endl;
-    std::cout << dex.farray[i] << std::endl;
-  }
+    img.header.seq=header.seq;
+    img.header.frame_id=header.frame_id;
+    img.header.stamp.time=header.stamp.time;
 
-  return 0;
+    std::string first("image1.dat");
+    img.serialize(first);
+
+    Image dimg;
+    dimg.deserialize(first);
+
+    std::string second("image2.dat");
+    dimg.serialize(second);
+
+    return 0;
 }

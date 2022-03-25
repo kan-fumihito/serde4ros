@@ -1,12 +1,12 @@
-#include "std_msgs/Header.h"
+#include"std_msgs/Header.h"
 
-void Header::deserialize(std::string &fname) {
+void Header::deserialize(std::string &fname){
   setInputFile(fname);
   this->deserialize_Header();
   closeInputFile();
 }
 
-void Header::deserialize_Header(void) {
+void Header::deserialize_Header(void){
 
   this->seq = this->deserialize_uint32();
   this->stamp.deserialize_Time();

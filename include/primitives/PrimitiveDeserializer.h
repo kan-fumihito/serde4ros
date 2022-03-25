@@ -8,6 +8,14 @@
 
 class PrimitiveDeserializer : public Deserializer {
 public:
+
+  PrimitiveDeserializer(const PrimitiveDeserializer&) = delete;
+  PrimitiveDeserializer& operator=(const PrimitiveDeserializer&) = delete;
+  PrimitiveDeserializer& operator=(PrimitiveDeserializer&&) = delete;
+  
+  PrimitiveDeserializer() = default;
+  PrimitiveDeserializer(PrimitiveDeserializer&&) = default;
+
   uint8_t deserialize_uint8(void);
   int32_t deserialize_int32(void);
   uint32_t deserialize_uint32(void);
