@@ -1,11 +1,15 @@
 generate: generator.cc
 	clang++ generator.cc -o generator -std=c++17
+	mkdir -p include/std_msgs
+	mkdir -p src/std_msgs
 	./generator
 
-main: main.cc src/std_msgs/*.cc src/primitives/*.cc include/std_msgs/*.h include/primitives/*.h
-	clang++ main.cc src/std_msgs/*.cc src/primitives/*.cc -o main -Iinclude -std=c++17
-	./main
+test: test.cc src/std_msgs/*.cc src/primitives/*.cc include/std_msgs/*.h include/primitives/*.h
+	clang++ test.cc src/std_msgs/*.cc src/primitives/*.cc -o test -Iinclude -std=c++17
+	./test
 
-all: generate main
+all: generate test
 
-
+clear:
+	rm -r src/std_msgs
+	rm -r include/std_msgs

@@ -6,3 +6,7 @@
 !Makefile
 !Dockerfile
 *.dat
+generator
+test
+include/std_msgs
+src/std_msgs
